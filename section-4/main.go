@@ -22,20 +22,44 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	err = tpl.Execute(w, nil)
 	if err != nil {
 		log.Printf("executing template: %v", err)
-		http.Error(w, "There was n error executing the template", http.StatusInternalServerError)
+		http.Error(w, "There was an error executing the template", http.StatusInternalServerError)
 		return
 	}
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, "<h1>  Contact Page </h1><p> To get in touch, email me at <a href=\"mailto:example@example.test\"> exampke@example.test </a>.")
+	tplPath := filepath.Join("templates", "contact.gohtml")
+	tpl, err := template.ParseFiles(tplPath)
+	if err != nil {
+		log.Printf("parsing template: %v", err)
+		http.Error(w, "There was an error parsing teh template", http.StatusInternalServerError)
+		return
+	}
+	err = tpl.Execute(w, nil)
+	if err != nil {
+		log.Printf("executing: %v", err)
+		http.Error(w, "There was an error executing the template", http.StatusInternalServerError)
+		return
+	}
+
 }
 
 func faqHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, `<h1>  FAG Page </h1><p> Why blah bla bla blah? When yada, yada, yada.. </a>.
-	`)
+	tplPath := filepath.Join("templates", "faq.gohtml")
+	tpl, err := template.ParseFiles(tplPath)
+	if err != nil {
+		log.Printf("parsing template: %v", err)
+		http.Error(w, "There was an error parsing teh template", http.StatusInternalServerError)
+		return
+	}
+	err = tpl.Execute(w, nil)
+	if err != nil {
+		log.Printf("executing: %v", err)
+		http.Error(w, "There was an error executing the template", http.StatusInternalServerError)
+		return
+	}
 }
 
 func main() {
