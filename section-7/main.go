@@ -14,13 +14,17 @@ func main() {
 
 	r := chi.NewRouter()
 
-	// ! Example of rendering first the home.gohtml and then the layout-parts.gohtml.
-	r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "home.gohtml", "layout-parts.gohtml"))))
+	r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS,
+		"home.gohtml",
+		"tailwind.gohtml"))))
 
-	// ! Example of rendering first the layout-page.gohtml and then the individual contact.gohtml page.
-	r.Get("/contact", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "layout-page.gohtml", "contact.gohtml"))))
+	r.Get("/contact", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS,
+		"contact.gohtml",
+		"tailwind.gohtml"))))
 
-	r.Get("/faq", controllers.FAQ(views.Must(views.ParseFS(templates.FS, "faq.gohtml"))))
+	r.Get("/faq", controllers.FAQ(views.Must(views.ParseFS(templates.FS,
+		"faq.gohtml",
+		"tailwind.gohtml"))))
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Page Not Found", http.StatusNotFound)
