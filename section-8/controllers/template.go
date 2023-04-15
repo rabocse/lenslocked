@@ -3,7 +3,6 @@ package controllers
 import "net/http"
 
 /*
-
 if we check the users.go controller:
 
 type Users struct {
