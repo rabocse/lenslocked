@@ -26,9 +26,15 @@ func main() {
 		"faq.gohtml",
 		"tailwind.gohtml"))))
 
-	r.Get("/signup", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS,
+	// the signup resource is a user action, therefore it might makes sense to move it
+	// to a users controller package, instead of using the static.go (staticHandler).
+	// This does not produce any visual difference
+	usersC := controllers.Users{}
+	usersC.Templates.New = views.Must(views.ParseFS(templates.FS,
 		"signup.gohtml",
-		"tailwind.gohtml"))))
+		"tailwind.gohtml"))
+
+	r.Get("/signup", usersC.New)
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Page Not Found", http.StatusNotFound)
